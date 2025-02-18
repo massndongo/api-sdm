@@ -1,0 +1,3125 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Stade de Mbour",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/cartes": {
+            "get": {
+                "tags": [
+                    "Access Cards"
+                ],
+                "summary": "Liste des cartes d'accès",
+                "operationId": "1a2553187f0a8d2cfd83a7d6b6d00a78",
+                "responses": {
+                    "200": {
+                        "description": "Liste des cartes d'accès"
+                    }
+                }
+            }
+        },
+        "/api/cartes/generate": {
+            "post": {
+                "tags": [
+                    "Access Cards"
+                ],
+                "summary": "Générer une carte d'accès",
+                "operationId": "b38b89d6fffa7b9a5049d0fc516f7cc4",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "user_id": {
+                                        "description": "UUID de l'utilisateur si déjà existant",
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "f3f9c8c1-72ab-4a6b-9d74-3f4078ce7e84"
+                                    },
+                                    "firstname": {
+                                        "type": "string",
+                                        "example": "John"
+                                    },
+                                    "lastname": {
+                                        "type": "string",
+                                        "example": "Doe"
+                                    },
+                                    "role_id": {
+                                        "description": "UUID du rôle si on crée un nouvel utilisateur",
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "a2f9c8c1-72ab-4a6b-9d74-3f4078ce7e99"
+                                    },
+                                    "prix": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 50
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "+221777000111"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Carte générée avec succès"
+                    },
+                    "422": {
+                        "description": "Erreur de validation"
+                    }
+                }
+            }
+        },
+        "/api/cartes/block/{card}": {
+            "post": {
+                "tags": [
+                    "Access Cards"
+                ],
+                "summary": "Bloquer une carte d'accès",
+                "operationId": "dead4ec5334e6632d3dc05375fdf054a",
+                "parameters": [
+                    {
+                        "name": "card",
+                        "in": "path",
+                        "description": "UUID de la carte",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Carte bloquée avec succès"
+                    }
+                }
+            }
+        },
+        "/api/cartes/deactivate/{card}": {
+            "post": {
+                "tags": [
+                    "Access Cards"
+                ],
+                "summary": "Désactiver une carte d'accès",
+                "operationId": "c30551a0eac2d061ac81e1ea4eb54fec",
+                "parameters": [
+                    {
+                        "name": "card",
+                        "in": "path",
+                        "description": "UUID de la carte",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Carte désactivée avec succès"
+                    }
+                }
+            }
+        },
+        "/api/cartes/{id}": {
+            "get": {
+                "tags": [
+                    "Access Cards"
+                ],
+                "summary": "Détails d'une carte d'accès",
+                "operationId": "6e22ba68a0ac8ff976a229801d0142fa",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "UUID de la carte",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Détails de la carte d'accès"
+                    },
+                    "404": {
+                        "description": "Carte non trouvée"
+                    }
+                }
+            }
+        },
+        "/api/cartes/sell/{id}": {
+            "post": {
+                "tags": [
+                    "Access Cards"
+                ],
+                "summary": "Vendre une carte d'accès",
+                "operationId": "11fd386aaa5260f1667a90a51306f67b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "UUID de la carte",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Carte vendue avec succès"
+                    }
+                }
+            }
+        },
+        "/api/cartes/stats": {
+            "get": {
+                "tags": [
+                    "Access Cards"
+                ],
+                "summary": "Obtenir les statistiques des cartes vendues",
+                "operationId": "ace7a93696d01a50e12a11a7847018bd",
+                "responses": {
+                    "200": {
+                        "description": "Statistiques des cartes"
+                    }
+                }
+            }
+        },
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Créer un nouveau compte utilisateur",
+                "operationId": "register",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "firstname",
+                                    "lastname",
+                                    "phone",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "firstname": {
+                                        "type": "string",
+                                        "example": "Kirua"
+                                    },
+                                    "lastname": {
+                                        "type": "string",
+                                        "example": "Zoldik"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "+221772357546"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "passer123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Utilisateur enregistré avec succès.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Utilisateur enregistré avec succès."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Erreur de validation."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Connecter un utilisateur avec son téléphone et mot de passe",
+                "operationId": "login",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "phone",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "+221772357546"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "passer123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Connexion réussie.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string",
+                                            "example": "eyJ0eXAiOiJKV1QiLC..."
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "Bearer"
+                                        },
+                                        "user": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Identifiants invalides."
+                    },
+                    "403": {
+                        "description": "Compte non activé."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/verify-otp": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Vérifier le code pour activer un compte",
+                "operationId": "verifyOtp",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "phone",
+                                    "otp"
+                                ],
+                                "properties": {
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "+221772357546"
+                                    },
+                                    "otp": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Compte activé avec succès.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Compte activé avec succès."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Code invalide ou expiré."
+                    },
+                    "404": {
+                        "description": "Utilisateur non trouvé."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Déconnecter l'utilisateur actuel",
+                "operationId": "logout",
+                "responses": {
+                    "200": {
+                        "description": "L'utilisateur s'est déconnecté avec succès.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Déconnecté avec succès"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non autorisé."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/resend-otp": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Renvoyer un nouveau code OTP en cas d'expiration",
+                "operationId": "resendOtp",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "phone"
+                                ],
+                                "properties": {
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "+221772357546"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Nouveau code OTP envoyé avec succès.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Nouveau code OTP envoyé avec succès."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Utilisateur non trouvé."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/forgot-password": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Demander un code OTP pour réinitialiser le mot de passe",
+                "operationId": "forgotPassword",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "phone"
+                                ],
+                                "properties": {
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "+221772357546"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Code OTP envoyé avec succès.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Code OTP envoyé avec succès."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Utilisateur non trouvé."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/reset-password": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Réinitialiser le mot de passe avec un code OTP valide",
+                "operationId": "resetPassword",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "phone",
+                                    "otp",
+                                    "new_password"
+                                ],
+                                "properties": {
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "+221772357546"
+                                    },
+                                    "otp": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "new_password": {
+                                        "type": "string",
+                                        "example": "newpass123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Mot de passe réinitialisé avec succès.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Mot de passe réinitialisé avec succès."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Code OTP invalide ou expiré."
+                    },
+                    "404": {
+                        "description": "Utilisateur non trouvé."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/clubs": {
+            "get": {
+                "tags": [
+                    "Clubs"
+                ],
+                "summary": "Lister tous les clubs",
+                "operationId": "c44731a8866e74bcd14a6b4f0f1f82b6",
+                "responses": {
+                    "200": {
+                        "description": "Liste des clubs récupérée avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Club"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non autorisé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Clubs"
+                ],
+                "summary": "Créer un nouveau club",
+                "operationId": "4e37feabfe957444c16ab299c31af0a7",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "AS Dakar"
+                                    },
+                                    "date_creation": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2020-01-01"
+                                    },
+                                    "stade": {
+                                        "type": "string",
+                                        "example": "Stade Léopold Sédar Senghor"
+                                    },
+                                    "entraineur": {
+                                        "type": "string",
+                                        "example": "Jean Dupont"
+                                    },
+                                    "president": {
+                                        "type": "string",
+                                        "example": "Pierre Ndiaye"
+                                    },
+                                    "user_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "a2f9c8c1-72ab-4a6b-9d74-3f4078ce7e99"
+                                    },
+                                    "logo": {
+                                        "description": "Logo du club",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Club créé avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Club"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Erreur de validation"
+                    },
+                    "401": {
+                        "description": "Non autorisé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/clubs/{id}": {
+            "get": {
+                "tags": [
+                    "Clubs"
+                ],
+                "summary": "Afficher les détails d'un club",
+                "operationId": "b5900ff997f9d991c3a388875d8971f8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "UUID du club",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Détails du club récupérés avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Club"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Club non trouvé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Clubs"
+                ],
+                "summary": "Mettre à jour un club existant",
+                "operationId": "9a7201b06d26cfc6aa54fe93f98774d2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "UUID du club",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "AS Dakar"
+                                    },
+                                    "date_creation": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2020-01-01"
+                                    },
+                                    "stade": {
+                                        "type": "string",
+                                        "example": "Stade Léopold Sédar Senghor"
+                                    },
+                                    "entraineur": {
+                                        "type": "string",
+                                        "example": "Jean Dupont"
+                                    },
+                                    "president": {
+                                        "type": "string",
+                                        "example": "Pierre Ndiaye"
+                                    },
+                                    "user_id": {
+                                        "type": "string",
+                                        "format": "uuid"
+                                    },
+                                    "logo": {
+                                        "description": "Logo du club",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Club mis à jour avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Club"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Club non trouvé"
+                    },
+                    "401": {
+                        "description": "Non autorisé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Clubs"
+                ],
+                "summary": "Supprimer un club",
+                "operationId": "7ae9561f331895c99ba0d047eb68ba96",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "UUID du club",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Club supprimé avec succès"
+                    },
+                    "404": {
+                        "description": "Club non trouvé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/events": {
+            "get": {
+                "tags": [
+                    "Événement"
+                ],
+                "summary": "Liste des événements",
+                "operationId": "7058ab7c89d20c752b6afd6d808f6526",
+                "responses": {
+                    "200": {
+                        "description": "Liste des événements",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Événement"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Événement"
+                ],
+                "summary": "Créer un nouvel événement",
+                "operationId": "508895e03d7f10edac84357084c87b20",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Tournoi régional"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Un tournoi pour les équipes locales."
+                                    },
+                                    "date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-03-01"
+                                    },
+                                    "start_time": {
+                                        "type": "string",
+                                        "format": "date_format:H:i",
+                                        "example": "15:00"
+                                    },
+                                    "lieu": {
+                                        "type": "string",
+                                        "example": "Stade Léopold Sédar Senghor"
+                                    },
+                                    "club_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "cf15f624-b90c-4b06-8a65-cfdd647f646c"
+                                    },
+                                    "club_away_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "b8d6a0b6-7e88-4d4d-b731-d2dc8f6c2911"
+                                    },
+                                    "location_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "e9c6d2b6-1e88-4a7d-b731-c2dc8f6c2982"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Événement créé avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Événement"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/events/{id}": {
+            "get": {
+                "tags": [
+                    "Événement"
+                ],
+                "summary": "Détails d'un événement",
+                "operationId": "6f743f71f7a88dbe57be1d9c9ebf47cb",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "UUID de l'événement",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Détails de l'événement",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Événement"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Événement non trouvé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Événement"
+                ],
+                "summary": "Mettre à jour un événement",
+                "operationId": "fb130dcf1ab4d7abbd3a173741df1f8f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "UUID de l'événement",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Tournoi modifié"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Nouvelle description"
+                                    },
+                                    "date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-03-10"
+                                    },
+                                    "lieu": {
+                                        "type": "string",
+                                        "example": "Stade Modifié"
+                                    },
+                                    "club_id": {
+                                        "type": "string",
+                                        "format": "uuid"
+                                    },
+                                    "club_away_id": {
+                                        "type": "string",
+                                        "format": "uuid"
+                                    },
+                                    "location_id": {
+                                        "type": "string",
+                                        "format": "uuid"
+                                    },
+                                    "start_time": {
+                                        "type": "string",
+                                        "format": "date_format:H:i",
+                                        "example": "16:30"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Événement mis à jour avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Événement"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Événement non trouvé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Événement"
+                ],
+                "summary": "Supprimer un événement",
+                "operationId": "b8c8f4b41a32532f5e9f7146e511bc61",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "UUID de l'événement",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Événement supprimé avec succès"
+                    },
+                    "404": {
+                        "description": "Événement non trouvé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/locations": {
+            "get": {
+                "tags": [
+                    "Location"
+                ],
+                "summary": "List of locations",
+                "operationId": "c22aa1cae7ab2b2ad315141d06fec369",
+                "responses": {
+                    "200": {
+                        "description": "List of locations",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Location"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Location"
+                ],
+                "summary": "Create a new location",
+                "operationId": "055665bfbdc18cab3dc956925a9000b4",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Stade Léopold Sédar Senghor"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "Avenue Nelson Mandela"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "example": "Dakar"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Location created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Location"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/locations/{id}": {
+            "get": {
+                "tags": [
+                    "Location"
+                ],
+                "summary": "Location details",
+                "operationId": "bcaac2b6f85e83cdc99139be535c66e6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "UUID of the location",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Location details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Location"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Location not found"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Location"
+                ],
+                "summary": "Update an existing location",
+                "operationId": "3ac5d4120b6fb23f55f179649493a2d8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "UUID of the location",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Stade Léopold Sédar Senghor"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "Avenue Nelson Mandela"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "example": "Dakar"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Location updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Location"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Location not found"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Location"
+                ],
+                "summary": "Delete a location",
+                "operationId": "721591ee086203214e6eb54f25625656",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "UUID of the location",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lieu supprimé avec succès"
+                    },
+                    "404": {
+                        "description": "Location not found"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/portier/entrée": {
+            "post": {
+                "tags": [
+                    "Portier"
+                ],
+                "summary": "Enregistrer une entrée via QR code",
+                "operationId": "3b588da6af211d04707b1d1e95e9bda6",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "qr_code"
+                                ],
+                                "properties": {
+                                    "qr_code": {
+                                        "type": "string",
+                                        "example": "QR123456789"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Entrée enregistré avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Entrée enregistré avec succès"
+                                        },
+                                        "check_in": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Ticket non disponible ou déjà utilisé"
+                    },
+                    "403": {
+                        "description": "Interdit : Accès refusé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/portier/total-entrées": {
+            "get": {
+                "tags": [
+                    "Portier"
+                ],
+                "summary": "Liste des entrées effectuées par le portier",
+                "operationId": "4e8c3a0cf6eea718f78171ba701b3586",
+                "responses": {
+                    "200": {
+                        "description": "Liste des check-ins",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Entrée"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/roles": {
+            "get": {
+                "tags": [
+                    "Role"
+                ],
+                "summary": "Get list of roles",
+                "operationId": "77e3636d8592997ce9d6d27b50857a69",
+                "responses": {
+                    "200": {
+                        "description": "List of roles",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Role"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Role"
+                ],
+                "summary": "Create a new role",
+                "operationId": "4a563842fbfcad237f63da43065fca3d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "admin"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Role created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Role"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/roles/{id}": {
+            "get": {
+                "tags": [
+                    "Role"
+                ],
+                "summary": "Get a specific role",
+                "operationId": "7fb0667a295b7678a30353aa11739683",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "UUID of the role",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Specific role",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Role"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Role not found"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Role"
+                ],
+                "summary": "Update an existing role",
+                "operationId": "786d6990093a8eb3a56931f19a827e43",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "UUID of the role to update",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "admin"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Role updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Role"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Role not found"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Role"
+                ],
+                "summary": "Delete a role",
+                "operationId": "8285c46981c60ad600aa4077307aec04",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "UUID of the role to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Role supprimé"
+                    },
+                    "404": {
+                        "description": "Role not found"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/sales/stats": {
+            "get": {
+                "tags": [
+                    "Ventes"
+                ],
+                "summary": "Obtenir des statistiques sur les ventes",
+                "description": "Récupère les statistiques globales (total des ventes, revenu, nombre de tickets) ainsi que la répartition par événement et par catégorie de ticket. Filtre possible par date de début et date de fin.",
+                "operationId": "5334ccefed29563718ba26890a1722a1",
+                "parameters": [
+                    {
+                        "name": "start_date",
+                        "in": "query",
+                        "description": "Date de début du filtre (YYYY-MM-DD)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "2025-01-01"
+                        }
+                    },
+                    {
+                        "name": "end_date",
+                        "in": "query",
+                        "description": "Date de fin du filtre (YYYY-MM-DD)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "2025-12-31"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Statistiques de ventes récupérées avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "total_sales": {
+                                            "description": "Nombre total de ventes payées",
+                                            "type": "integer",
+                                            "example": 50
+                                        },
+                                        "total_revenue": {
+                                            "description": "Revenu total",
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 125000.5
+                                        },
+                                        "total_tickets": {
+                                            "description": "Nombre total de tickets vendus",
+                                            "type": "integer",
+                                            "example": 150
+                                        },
+                                        "sales_by_event": {
+                                            "description": "Répartition des ventes par événement",
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "event_id": {
+                                                        "type": "string",
+                                                        "format": "uuid",
+                                                        "example": "039ff624-b90c-4b06-8a65-cfdd647f646c"
+                                                    },
+                                                    "total_sales": {
+                                                        "type": "integer",
+                                                        "example": 30
+                                                    },
+                                                    "total_revenue": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": 60000
+                                                    },
+                                                    "total_tickets": {
+                                                        "type": "integer",
+                                                        "example": 60
+                                                    },
+                                                    "sales_percentage": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": 60
+                                                    },
+                                                    "revenue_percentage": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": 48
+                                                    },
+                                                    "tickets_percentage": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": 40
+                                                    },
+                                                    "event": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string",
+                                                                "format": "uuid",
+                                                                "example": "039ff624-b90c-4b06-8a65-cfdd647f646c"
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Événement A"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "sales_by_category": {
+                                            "description": "Répartition des ventes par catégorie de tickets",
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "ticket_category_id": {
+                                                        "type": "string",
+                                                        "format": "uuid",
+                                                        "example": "af2c5c2a-90e3-4b06-a354-482b647f1234"
+                                                    },
+                                                    "total_sales": {
+                                                        "type": "integer",
+                                                        "example": 20
+                                                    },
+                                                    "total_revenue": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": 65000
+                                                    },
+                                                    "total_tickets": {
+                                                        "type": "integer",
+                                                        "example": 40
+                                                    },
+                                                    "sales_percentage": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": 40
+                                                    },
+                                                    "revenue_percentage": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": 52
+                                                    },
+                                                    "tickets_percentage": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": 26.67
+                                                    },
+                                                    "category": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string",
+                                                                "format": "uuid",
+                                                                "example": "af2c5c2a-90e3-4b06-a354-482b647f1234"
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "VIP"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/ticket-categories": {
+            "get": {
+                "tags": [
+                    "Ticket Categories"
+                ],
+                "summary": "Liste toutes les catégories de tickets",
+                "description": "Récupère toutes les catégories de tickets.",
+                "operationId": "cb6bf728c1c2d699116738acc0b264eb",
+                "responses": {
+                    "200": {
+                        "description": "Liste des catégories",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TicketCategory"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Ticket Categories"
+                ],
+                "summary": "Créer une nouvelle catégorie de tickets",
+                "description": "Ajoute une catégorie de tickets. Seuls les administrateurs peuvent effectuer cette action.",
+                "operationId": "8b6c17a79c5b41d5810319918da3357d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "Nom de la catégorie",
+                                        "type": "string",
+                                        "example": "VIP"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Catégorie créée",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TicketCategory"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Interdit : Accès refusé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/ticket-categories/{id}": {
+            "get": {
+                "tags": [
+                    "Ticket Categories"
+                ],
+                "summary": "Afficher une catégorie de tickets spécifique",
+                "description": "Récupère une catégorie de tickets par son UUID.",
+                "operationId": "42fdab18cee074d520ecce76c6a73ba1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "UUID de la catégorie",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Catégorie trouvée",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TicketCategory"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Catégorie non trouvée"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Ticket Categories"
+                ],
+                "summary": "Mettre à jour une catégorie de tickets",
+                "description": "Met à jour les informations d'une catégorie de tickets. Seuls les administrateurs peuvent effectuer cette action.",
+                "operationId": "29c19bf3a5091573606e01570d2c5ef3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "UUID de la catégorie",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "Nom de la catégorie",
+                                        "type": "string",
+                                        "example": "Standard"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Catégorie mise à jour",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TicketCategory"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Interdit : Accès refusé"
+                    },
+                    "404": {
+                        "description": "Catégorie non trouvée"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Ticket Categories"
+                ],
+                "summary": "Supprimer une catégorie de tickets",
+                "description": "Supprime une catégorie de tickets. Seuls les administrateurs peuvent effectuer cette action.",
+                "operationId": "c815041523c65461680259076faf9b70",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "UUID de la catégorie",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Catégorie supprimée avec succès"
+                    },
+                    "403": {
+                        "description": "Interdit : Accès refusé"
+                    },
+                    "404": {
+                        "description": "Catégorie non trouvée"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/tickets": {
+            "get": {
+                "tags": [
+                    "Ticket"
+                ],
+                "summary": "Liste des tickets",
+                "operationId": "0082053c3590628e674a11ec0d1466e6",
+                "responses": {
+                    "200": {
+                        "description": "Liste des tickets"
+                    },
+                    "403": {
+                        "description": "Accès refusé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/tickets/{id}": {
+            "get": {
+                "tags": [
+                    "Ticket"
+                ],
+                "summary": "Détails d'un ticket",
+                "operationId": "62091a82e5103c19191c4c1ebd30ec6f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "UUID du ticket",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Détails du ticket"
+                    },
+                    "404": {
+                        "description": "Ticket non trouvé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Ticket"
+                ],
+                "summary": "Mettre à jour un ticket",
+                "operationId": "1010dcd7a1f352766df66431f1df4745",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "UUID du ticket",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "prix": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 2000
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "example": "sold"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ticket mis à jour avec succès"
+                    },
+                    "403": {
+                        "description": "Accès refusé"
+                    },
+                    "404": {
+                        "description": "Ticket non trouvé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Ticket"
+                ],
+                "summary": "Supprimer un ticket",
+                "operationId": "c37b65ae6ff3ffa8c9e0c14ea4d6a9f7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "UUID du ticket",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ticket supprimé avec succès"
+                    },
+                    "403": {
+                        "description": "Accès refusé"
+                    },
+                    "404": {
+                        "description": "Ticket non trouvé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/generate-tickets": {
+            "post": {
+                "tags": [
+                    "Ticket"
+                ],
+                "summary": "Générer plusieurs tickets avec QR codes",
+                "operationId": "dc113fe05642dd429f636ea8190459b8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "ticket_category_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "039ff624-b90c-4b06-8a65-cfdd647f646c"
+                                    },
+                                    "event_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "89ff624-b90c-4b06-8a65-cfdd647f6422"
+                                    },
+                                    "quantity": {
+                                        "type": "integer",
+                                        "example": 10
+                                    },
+                                    "prix": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 1000
+                                    },
+                                    "channel": {
+                                        "type": "string",
+                                        "example": "online"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "example": "available"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Tickets générés avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "string",
+                                                "format": "uuid",
+                                                "example": "039ff624-b90c-4b06-8a65-cfdd647f646c"
+                                            },
+                                            "ticket_category_id": {
+                                                "type": "string",
+                                                "format": "uuid"
+                                            },
+                                            "event_id": {
+                                                "type": "string",
+                                                "format": "uuid"
+                                            },
+                                            "prix": {
+                                                "type": "number",
+                                                "format": "float",
+                                                "example": 1000
+                                            },
+                                            "qr_code": {
+                                                "type": "string",
+                                                "example": "https://.../storage/qrcodes/ticket_1.png"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Erreur de validation des données"
+                    },
+                    "403": {
+                        "description": "Accès refusé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/purchase-ticket": {
+            "post": {
+                "tags": [
+                    "Ticket"
+                ],
+                "summary": "Achat de ticket",
+                "operationId": "059263c31f7189fabaa5e7888683f146",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "event_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "039ff624-b90c-4b06-8a65-cfdd647f646c"
+                                    },
+                                    "category_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "949ff624-b90c-4b06-8a65-cfdd647f6411"
+                                    },
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "John"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "Doe"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "+221777000111"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "john.doe@example.com"
+                                    },
+                                    "quantity": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Achat de ticket réussi"
+                    },
+                    "400": {
+                        "description": "Pas assez de tickets disponibles"
+                    },
+                    "422": {
+                        "description": "Erreur de validation des données"
+                    }
+                }
+            }
+        },
+        "/api/get-payment-url/{saleId}": {
+            "get": {
+                "tags": [
+                    "Ticket"
+                ],
+                "summary": "Obtenir l'URL de paiement PayTech pour une vente",
+                "operationId": "1c89a3bf8a9000e216ae37a3d9a034bb",
+                "parameters": [
+                    {
+                        "name": "saleId",
+                        "in": "path",
+                        "description": "UUID de la vente (Sale)",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Renvoie l'URL de paiement",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "payment_url": {
+                                            "type": "string",
+                                            "example": "https://paytech.sn/redirect_url"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Vente non trouvée"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/payment/callback/{saleId}": {
+            "post": {
+                "tags": [
+                    "Ticket"
+                ],
+                "summary": "Callback PayTech après un paiement",
+                "description": "Endpoint appelé par PayTech pour confirmer le statut du paiement d'une vente.",
+                "operationId": "ab852f81d98c953c0a01a4ce07927c28",
+                "parameters": [
+                    {
+                        "name": "saleId",
+                        "in": "path",
+                        "description": "UUID de la vente (Sale)",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "status": {
+                                        "description": "Statut renvoyé par PayTech",
+                                        "type": "string",
+                                        "example": "completed"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Paiement traité avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Payment processed successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Paiement non trouvé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/payment/notify/{saleId}": {
+            "post": {
+                "tags": [
+                    "Ticket"
+                ],
+                "summary": "Notification IPN PayTech",
+                "description": "Endpoint appelé par PayTech pour notifier instantanément le statut d'une transaction (IPN).",
+                "operationId": "6c230e44f75160a598ad147a5b29edcc",
+                "parameters": [
+                    {
+                        "name": "saleId",
+                        "in": "path",
+                        "description": "UUID de la vente (Sale)",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "status": {
+                                        "description": "Statut renvoyé par PayTech",
+                                        "type": "string",
+                                        "example": "completed"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Notification traitée avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Payment processed successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Paiement non trouvé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/events/{buyer_id}/tickets": {
+            "get": {
+                "tags": [
+                    "Ticket"
+                ],
+                "summary": "Récupérer les tickets vendus à l'utilisateur authentifié",
+                "operationId": "482b2be1f3ad3e0ac00931d122496613",
+                "responses": {
+                    "200": {
+                        "description": "Liste des tickets vendus à l'utilisateur"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/utilisateurs": {
+            "get": {
+                "tags": [
+                    "Utilisateur"
+                ],
+                "summary": "Liste des utilisateurs",
+                "operationId": "021962d92444caba7ac974c9799c9004",
+                "responses": {
+                    "200": {
+                        "description": "Liste des utilisateurs",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Utilisateur"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Utilisateur"
+                ],
+                "summary": "Créer un nouvel utilisateur",
+                "operationId": "c435ead25b1207395a5204c5af9d547f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "firstname": {
+                                        "type": "string",
+                                        "example": "John"
+                                    },
+                                    "lastname": {
+                                        "type": "string",
+                                        "example": "Doe"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "772222222"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "securepassword123"
+                                    },
+                                    "role_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "5f05f8f7-ecbd-4c72-a264-37bd22e2dfb7"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Utilisateur créé avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Utilisateur"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/utilisateurs/{id}": {
+            "get": {
+                "tags": [
+                    "Utilisateur"
+                ],
+                "summary": "Détails d'un utilisateur",
+                "operationId": "e6c541ec430abe164ac9841a984ddfbe",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "UUID de l'utilisateur",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Détails de l'utilisateur",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Utilisateur"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Utilisateur non trouvé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Utilisateur"
+                ],
+                "summary": "Mettre à jour un utilisateur",
+                "operationId": "7a1a1a6558e1e22d8846e61725265b71",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "UUID de l'utilisateur",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "firstname": {
+                                        "type": "string",
+                                        "example": "Kirua"
+                                    },
+                                    "lastname": {
+                                        "type": "string",
+                                        "example": "Zoldik"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "+221772222222"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "newpassword123"
+                                    },
+                                    "role_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "5f05f8f7-ecbd-4c72-a264-37bd22e2dfb7"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Utilisateur mis à jour avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Utilisateur"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Utilisateur non trouvé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Utilisateur"
+                ],
+                "summary": "Supprimer un utilisateur",
+                "operationId": "2ae52f8218ada6c42cd88e8775bc9a1e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "UUID de l'utilisateur",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Utilisateur supprimé avec succès"
+                    },
+                    "404": {
+                        "description": "Utilisateur non trouvé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/utilisateurs/me": {
+            "get": {
+                "tags": [
+                    "Utilisateur"
+                ],
+                "summary": "Récupérer les informations de l'utilisateur connecté",
+                "operationId": "612b709b98f5f01614e1bc7af008cab5",
+                "responses": {
+                    "200": {
+                        "description": "Détails de l'utilisateur connecté",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Utilisateur"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non autorisé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Club": {
+                "title": "Club",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "550e8400-e29b-41d4-a716-446655440000"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "AS Dakar"
+                    },
+                    "date_creation": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2020-01-01"
+                    },
+                    "stade": {
+                        "type": "string",
+                        "example": "Stade Léopold Sédar Senghor"
+                    },
+                    "entraineur": {
+                        "type": "string",
+                        "example": "Jean Dupont"
+                    },
+                    "president": {
+                        "type": "string",
+                        "example": "Pierre Ndiaye"
+                    },
+                    "user_id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "f3f9c8c1-72ab-4a6b-9d74-3f4078ce7e84"
+                    }
+                },
+                "type": "object"
+            },
+            "Événement": {
+                "title": "Événement",
+                "description": "Event model",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "039ff624-b90c-4b06-8a65-cfdd647f646c"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Tournoi régional"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Un tournoi pour les équipes locales."
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2025-03-01"
+                    },
+                    "lieu": {
+                        "type": "string",
+                        "example": "Stade Léopold Sédar Senghor"
+                    },
+                    "club_id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "3ff6e0b6-7e88-4d4d-b731-d2dc8f6c29e1"
+                    }
+                },
+                "type": "object"
+            },
+            "Location": {
+                "title": "Location",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "039ff624-b90c-4b06-8a65-cfdd647f646c"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Stade Léopold Sédar Senghor"
+                    },
+                    "address": {
+                        "type": "string",
+                        "example": "Avenue Nelson Mandela"
+                    },
+                    "city": {
+                        "type": "string",
+                        "example": "Dakar"
+                    }
+                },
+                "type": "object"
+            },
+            "Entrée": {
+                "title": "Entrée",
+                "description": "Enregistrement d'une entrée par un portier",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "550e8400-e29b-41d4-a716-446655440000"
+                    },
+                    "ticket_id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "98f6e0b6-7e88-4d4d-b731-d2dc8f6c29e1"
+                    },
+                    "portier_id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "123e4567-e89b-12d3-a456-426614174000"
+                    },
+                    "checkin_time": {
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2025-01-21T12:00:00Z"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2025-01-21T12:00:00Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2025-01-21T12:00:00Z"
+                    }
+                },
+                "type": "object"
+            },
+            "Role": {
+                "title": "Role",
+                "required": [
+                    "id",
+                    "name"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "UUID of the role",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "f3f9c8c1-72ab-4a6b-9d74-3f4078ce7e84"
+                    },
+                    "name": {
+                        "description": "Name of the role",
+                        "type": "string",
+                        "example": "admin"
+                    }
+                },
+                "type": "object"
+            },
+            "TicketCategory": {
+                "title": "Ticket Category",
+                "description": "Représentation d'une catégorie de tickets",
+                "properties": {
+                    "id": {
+                        "description": "UUID unique de la catégorie",
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "039ff624-b90c-4b06-8a65-cfdd647f646c"
+                    },
+                    "name": {
+                        "description": "Nom de la catégorie",
+                        "type": "string",
+                        "example": "VIP"
+                    },
+                    "created_at": {
+                        "description": "Date de création",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2025-01-20T10:00:00Z"
+                    },
+                    "updated_at": {
+                        "description": "Date de mise à jour",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2025-01-21T14:00:00Z"
+                    }
+                },
+                "type": "object"
+            },
+            "Utilisateur": {
+                "title": "Utilisateur",
+                "description": "Représentation d'un utilisateur",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "039ff624-b90c-4b06-8a65-cfdd647f646c"
+                    },
+                    "firstname": {
+                        "type": "string",
+                        "example": "John"
+                    },
+                    "lastname": {
+                        "type": "string",
+                        "example": "Doe"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "example": "+221772222222"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "johndoe@example.com"
+                    },
+                    "role_id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "5f05f8f7-ecbd-4c72-a264-37bd22e2dfb7"
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "example": true
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "sanctum": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Access Cards",
+            "description": "Access Cards"
+        },
+        {
+            "name": "Auth",
+            "description": "Auth"
+        },
+        {
+            "name": "Clubs",
+            "description": "Clubs"
+        },
+        {
+            "name": "Événement",
+            "description": "Événement"
+        },
+        {
+            "name": "Location",
+            "description": "Location"
+        },
+        {
+            "name": "Portier",
+            "description": "Portier"
+        },
+        {
+            "name": "Role",
+            "description": "Role"
+        },
+        {
+            "name": "Ventes",
+            "description": "Ventes"
+        },
+        {
+            "name": "Ticket Categories",
+            "description": "Ticket Categories"
+        },
+        {
+            "name": "Ticket",
+            "description": "Ticket"
+        },
+        {
+            "name": "Utilisateur",
+            "description": "Utilisateur"
+        }
+    ],
+    "security": [
+        {
+            "bearerAuth": []
+        }
+    ]
+}
